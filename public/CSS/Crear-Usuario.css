@@ -1,0 +1,91 @@
+/* Estilos generales */
+body {
+    background-color: #121212; /* Fondo oscuro */
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+/* Estilos para los botones */
+#tipoUsuarioButtons {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    background-color: #333; /* Fondo oscuro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Transición suave */
+  }
+  
+  /* Efecto de brillo y aumento de tamaño al pasar el cursor */
+  button:hover {
+    background-color: #444; /* Color un poco más claro para el efecto */
+    transform: scale(1.1); /* Aumentar el tamaño al 110% */
+  }
+  
+  /* Cambio de color y tamaño al hacer clic */
+  button:active {
+    background-color: #666; /* Color aún más claro para indicar clic */
+    transform: scale(0.9); /* Reducir el tamaño al 90% */
+  }
+  
+  
+  /* Estilos para los formularios */
+  #formularios {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .formulario {
+    background-color: #333; /* Fondo oscuro */
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+  }
+
+/* Estilo para campos inválidos */
+input:invalid,
+select:invalid {
+  border: 1px solid red;
+}
+
+/* Estilo para campos válidos */
+input:valid,
+select:valid {
+  border: 1px solid #ccc; /* Otra apariencia para los campos válidos */
+}
+
+/* Estilos para los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+  display: none;
+}
+
+/* Mostrar mensajes de error cuando el campo es inválido */
+input:invalid + .error-message,
+select:invalid + .error-message {
+  display: block;
+}
