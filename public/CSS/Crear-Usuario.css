@@ -17,6 +17,7 @@ body {
   
   button {
     background-color: #333; /* Fondo oscuro */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Agregar sombra */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -39,30 +40,53 @@ body {
   }
   
   
-  /* Estilos para los formularios */
-  #formularios {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .formulario {
-    background-color: #333; /* Fondo oscuro */
-    padding: 20px;
-    border-radius: 10px;
-    display: none;
-    margin: 0 auto;
-    max-width: 400px;
-  }
-  
-  input[type="text"],
-  input[type="password"],
-  input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: none;
-    border-radius: 5px;
-  }
+/* Estilos para el formulario */
+.formulario {
+  background-color: #333; /* Fondo oscuro */
+  padding: 50px;
+  border-radius: 10px;
+  margin: 0 auto;
+  max-width: 400px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3); /* Agregar sombra */
+}
+
+/* Agregar espaciado a los lados del formulario */
+#formulario {
+  margin-top: 20px;
+  text-align: center;
+  padding: 0 5px; /* Espaciado lateral */
+}
+
+/* Estilos para los campos de entrada y etiquetas */
+label, input[type="text"], input[type="password"], input[type="email"], input[type="date"], select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #444; /* Color de fondo */
+  color: white;
+}
+
+/* Estilos para el contenedor del campo de contraseña */
+.password-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Añadir margen inferior */
+}
+
+/* Estilos para el botón de mostrar contraseña */
+.verContrasenaUsuario {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+}
+
 
 /* Estilo para campos inválidos */
 input:invalid,

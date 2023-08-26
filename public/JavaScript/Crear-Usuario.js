@@ -1,15 +1,14 @@
-const formJefe = document.getElementById("formJefe");
-const nombreJefe = document.getElementById("nombreJefe");
-const apellidoJefe = document.getElementById("apellidoJefe");
-const dniJefe = document.getElementById("dniJefe");
-const correoJefe = document.getElementById("correoJefe");
-const fechaNacimientoJefe = document.getElementById("fechaNacimientoJefe");
-const empresaJefe = document.getElementById("empresaJefe");
-const contrasenaJefe = document.getElementById("contrasenaJefe");
-const verContrasenaJefe = document.getElementById("verContrasenaJefe");
-const sexoJefe = document.getElementById("sexoJefe");
+const formUsuario = document.getElementById("formUsuario");
+const nombreUsuario = document.getElementById("nombreUsuario");
+const apellidoUsuario = document.getElementById("apellidoUsuario");
+const dniUsuario = document.getElementById("dniUsuario");
+const correoUsuario = document.getElementById("correoUsuario");
+const fechaNacimientoUsuario = document.getElementById("fechaNacimientoUsuario");
+const contrasenaUsuario = document.getElementById("contrasenaUsuario");
+const verContrasenaUsuario = document.getElementById("verContrasenaUsuario");
+const sexoUsuario = document.getElementById("sexoUsuario");
 
-formJefe.addEventListener("submit",(event) => {
+formUsuario.addEventListener("submit",(event) => {
     event.preventDefault(); 
     let isValid = true;
 
@@ -28,92 +27,98 @@ formJefe.addEventListener("submit",(event) => {
     }
 
     // Validación del nombre (requerido)
-    if (nombreJefe.value.trim() === "") {
-    showError(nombreJefe, "Por favor ingresa un nombre válido.");
+    if (nombreUsuario.value.trim() === "") {
+    showError(nombreUsuario, "Por favor ingresa un nombre válido.");
     } else {
-    hideError(nombreJefe);
+    hideError(nombreUsuario);
     }
 
     // Validación del apellido (requerido)
-    if (apellidoJefe.value.trim() === "") {
-    showError(apellidoJefe, "Por favor ingresa un apellido válido.");
+    if (apellidoUsuario.value.trim() === "") {
+    showError(apellidoUsuario, "Por favor ingresa un apellido válido.");
     } else {
-    hideError(apellidoJefe);
+    hideError(apellidoUsuario);
     }
 
     // Validación del DNI (requerido, número)
-    if (dniJefe.value.trim() === "" || isNaN(dniJefe.value)) {
-    showError(dniJefe, "Por favor ingresa un DNI válido.");
+    if (dniUsuario.value.trim() === "" || isNaN(dniUsuario.value)) {
+    showError(dniUsuario, "Por favor ingresa un DNI válido.");
     } else {
-    hideError(dniJefe);
+    hideError(dniUsuario);
     }
 
     // Validación del correo electrónico (requerido, formato)
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(correoJefe.value)) {
-    showError(correoJefe, "Por favor ingresa un correo electrónico válido.");
+    if (!emailPattern.test(correoUsuario.value)) {
+    showError(correoUsuario, "Por favor ingresa un correo electrónico válido.");
     } else {
-    hideError(correoJefe);
+    hideError(correoUsuario);
     }
 
     // Validación de la contraseña (requerida)
-    if (contrasenaJefe.value.trim() === "") {
-    showError(contrasenaJefe, "Por favor ingresa una contraseña válida.");
-    } else {
-    hideError(contrasenaJefe);
-    }
-    
-    // Validación del nombre de la empresa (requerido)
-    if (empresaJefe.value.trim() === "") {
-    showError(empresaJefe, "Por favor ingresa un nombre de empresa válido.");
-    } else {
-    hideError(empresaJefe);
+    if (contrasenaUsuario.value.trim() === "") {
+    showError(contrasenaUsuario, "Por favor ingresa una contraseña válida.");
+    } else if (contrasenaUsuario.value.length < 6) {
+        showError(contrasenaUsuario, "La contraseña debe tener al menos 6 caracteres.");
+    }else {
+    hideError(contrasenaUsuario);
     }
 
     // Validación de la fecha de nacimiento (requerida)
-    if (fechaNacimientoJefe.value === "") {
-    showError(fechaNacimientoJefe, "Por favor selecciona una fecha de nacimiento válida.");
+    if (fechaNacimientoUsuario.value === "") {
+    showError(fechaNacimientoUsuario, "Por favor selecciona una fecha de nacimiento válida.");
     } else {
-    hideError(fechaNacimientoJefe);
+    hideError(fechaNacimientoUsuario);
     }
         // Luego, verificar si todos los campos son válidos
 
 
     if (isValid) {
-        const jefeData = {
-            nombre: nombreJefe.value,
-            apellido: apellidoJefe.value,
-            dni: dniJefe.value,
-            correo: correoJefe.value,
-            contrasena: contrasenaJefe.value,
-            empresa: empresaJefe.value,
-            fechaNacimiento: fechaNacimientoJefe.value,
-            sexo: sexoJefe.value,
+        const UsuarioData = {
+            nombre: nombreUsuario.value,
+            apellido: apellidoUsuario.value,
+            dni: dniUsuario.value,
+            correo: correoUsuario.value,
+            contrasena: contrasenaUsuario.value,
+            fechaNacimiento: fechaNacimientoUsuario.value,
+            sexo: sexoUsuario.value,
             };
 
-        try {
-            fetch('/registrar-jefe', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(jefeData)
-            });
-            // Redirigir a la página de inicio de sesión después del registro exitoso
-            window.location.href = '/Iniciar-Sesion.html';
-        } 
-        catch (error) {
-        console.error('Error al enviar datos:', error);
+    // Después de enviar los datos del formulario
+    fetch('/registrar-usuario', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(UsuarioData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.errors) {
+        // Mostrar mensajes de error en los campos correspondientes
+        if (data.errors.dni) {
+            showError(dniUsuario, data.errors.dni);
         }
+        if (data.errors.correo) {
+            showError(correoUsuario, data.errors.correo);
+        }
+        } else {
+        // Redirigir a la página de inicio de sesión después del registro exitoso
+        window.location.href = '/Iniciar-Sesion.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error al enviar datos:', error);
+    });
 
     }
 });
 
 // Mostrar u ocultar la contraseña
-verContrasenaJefe.addEventListener("change", () => {
-    if (verContrasenaJefe.checked) {
-    contrasenaJefe.type = "text";
+verContrasenaUsuario.addEventListener("click", () => {
+    if (contrasenaUsuario.type === "password") {
+        contrasenaUsuario.type = "text"; // Mostrar contraseña
     } else {
-    contrasenaJefe.type = "password";
+        contrasenaUsuario.type = "password"; // Ocultar contraseña
     }
 });
