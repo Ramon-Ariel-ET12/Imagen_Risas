@@ -18,5 +18,5 @@ DROP PROCEDURE IF EXISTS AltaUsuario $$
 CREATE PROCEDURE AltaUsuario (unnombre VARCHAR(50), unapellido VARCHAR(50), undni VARCHAR(50), uncorreo VARCHAR(50), uncontrasena CHAR(64), unfechaNacimiento DATE, unsexo CHAR(10))
 BEGIN
     INSERT INTO Usuario (nombre, apellido, dni, correo, contrasena, fechaNacimiento, sexo)
-    VALUES (unnombre, unapellido, undni, uncorreo, uncontrasena, unfechaNacimiento, unsexo);
+    VALUES (unnombre, unapellido, undni, uncorreo, SHA2(uncontrasena, 256), unfechaNacimiento, unsexo);
 END $$

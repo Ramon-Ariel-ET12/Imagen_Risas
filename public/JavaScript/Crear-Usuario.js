@@ -70,8 +70,25 @@ formUsuario.addEventListener("submit",(event) => {
     } else {
     hideError(fechaNacimientoUsuario);
     }
-        // Luego, verificar si todos los campos son válidos
+    
 
+    // Luego, verificar si todos los campos son válidos
+    // Después de realizar las validaciones y antes de enviar los datos del formulario...
+
+    fetch("/get-dni-correo-data")
+    .then(response => response.json())
+    .then(data => {
+    const dniCorreoData = data; // Datos recibidos del servidor
+
+    // Realiza las comparaciones para mostrar mensajes de error si es necesario
+    dniCorreoData.forEach(row => {
+        if (row.dni === dniUsuario.value) {
+        showError(dniUsuario, "El DNI ya está registrado.");
+        }
+        if (row.correo === correoUsuario.value) {
+        showError(correoUsuario, "El correo electrónico ya está registrado.");
+        }
+    });
 
     if (isValid) {
         const UsuarioData = {
@@ -94,31 +111,24 @@ formUsuario.addEventListener("submit",(event) => {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.errors) {
-        // Mostrar mensajes de error en los campos correspondientes
-        if (data.errors.dni) {
-            showError(dniUsuario, data.errors.dni);
-        }
-        if (data.errors.correo) {
-            showError(correoUsuario, data.errors.correo);
-        }
-        } else {
         // Redirigir a la página de inicio de sesión después del registro exitoso
         window.location.href = '/Iniciar-Sesion.html';
-        }
     })
     .catch(error => {
         console.error('Error al enviar datos:', error);
     });
 
     }
+    });
 });
 
 // Mostrar u ocultar la contraseña
 verContrasenaUsuario.addEventListener("click", () => {
     if (contrasenaUsuario.type === "password") {
         contrasenaUsuario.type = "text"; // Mostrar contraseña
+        verContrasenaUsuario.textContent = "Mostrar";
     } else {
         contrasenaUsuario.type = "password"; // Ocultar contraseña
+        verContrasenaUsuario.textContent = "Ocultar";
     }
 });

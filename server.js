@@ -28,48 +28,34 @@ app.get("/", (req, res) => {
   res.redirect("/pagina.html");
 });
 
+// Después de la conexión a la base de datos y la configuración del servidor...
+
+app.get("/get-dni-correo-data", (req, res) => {
+  connection.query("SELECT dni, correo FROM Usuario", (error, results) => {
+    if (error) {
+      console.error("Error al obtener datos de DNI y correo:", error);
+      res.status(500).json({ message: "Error al obtener datos de DNI y correo" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.post('/registrar-usuario', (req, res) => {
   const UsuarioData = req.body;
-
-  // Verificar duplicados en la base de datos
-  connection.query(
-    "SELECT dni, correo FROM Usuario WHERE dni = ? OR correo = ?",
-    [UsuarioData.dni, UsuarioData.correo],
-    (error, results) => {
-      if (error) {
-        console.log('Error al verificar duplicados', error);
-        res.status(500).json({ message: 'Error al registrar usuario' });
-      } else {
-        if (results.length > 0) {
-          const errors = {};
-          results.forEach(row => {
-            if (row.dni == UsuarioData.dni) {  // Cambio a la comparación no estricta
-              errors.dni = 'El DNI ya está registrado';
-            }
-            
-            if (row.correo === UsuarioData.correo) {
-              errors.correo = 'El correo electrónico ya está registrado';
-            }
-          });
-          res.status(400).json({ errors }); // Envía errores al cliente
-        } else {
-          // No hay duplicados, proceder con la inserción
-          connection.query(    
-          "CALL AltaUsuario ( ?, ?, ?, ?, ?, ?, ?)",
-          [ UsuarioData.nombre, UsuarioData.apellido, UsuarioData.dni, UsuarioData.correo, UsuarioData.contrasena, UsuarioData.fechaNacimiento, UsuarioData.sexo],
-          (insertError, insertResults) => {
-            if (insertError) {
-              console.log('Error al registrar al Usuario', insertError);
-              res.status(500).json({ message: 'Error al registrar Usuario' });
-            } else {
-              console.log('Usuario registrado correctamente');
-              res.status(200).json({ message: 'Usuario registrado correctamente' });
-            }
-          });
-        }
-      }
+  // No hay duplicados, proceder con la inserción
+  connection.query(    
+  "CALL AltaUsuario ( ?, ?, ?, ?, ?, ?, ?)",
+  [ UsuarioData.nombre, UsuarioData.apellido, UsuarioData.dni, UsuarioData.correo, UsuarioData.contrasena, UsuarioData.fechaNacimiento, UsuarioData.sexo],
+  (insertError, insertResults) => {
+    if (insertError) {
+      console.log('Error al registrar al Usuario', insertError);
+      res.status(500).json({ message: 'Error al registrar Usuario' });
+    } else {
+      console.log('Usuario registrado correctamente');
+      res.status(200).json({ message: 'Usuario registrado correctamente' });
     }
-  );
+  });
 });
 
 app.listen(PORT, () => {

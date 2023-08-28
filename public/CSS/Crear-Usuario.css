@@ -9,13 +9,7 @@ body {
     text-align: center;
   }
   
-/* Estilos para los botones */
-#tipoUsuarioButtons {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  button {
+  button{
     background-color: #333; /* Fondo oscuro */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Agregar sombra */
     color: white;
@@ -58,7 +52,7 @@ body {
 }
 
 /* Estilos para los campos de entrada y etiquetas */
-label, input[type="text"], input[type="password"], input[type="email"], input[type="date"], select {
+input[type="text"], input[type="password"], input[type="email"], input[type="date"], select {
   display: block;
   width: 100%;
   padding: 10px;
