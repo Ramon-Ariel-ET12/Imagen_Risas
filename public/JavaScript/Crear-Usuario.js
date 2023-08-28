@@ -5,7 +5,7 @@ const dniUsuario = document.getElementById("dniUsuario");
 const correoUsuario = document.getElementById("correoUsuario");
 const fechaNacimientoUsuario = document.getElementById("fechaNacimientoUsuario");
 const contrasenaUsuario = document.getElementById("contrasenaUsuario");
-const verContrasenaUsuario = document.getElementById("verContrasenaUsuario");
+const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
 const sexoUsuario = document.getElementById("sexoUsuario");
 
 formUsuario.addEventListener("submit",(event) => {
