@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mysql = require("mysql");
+const crypto = require('crypto');
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -30,8 +31,8 @@ app.get("/", (req, res) => {
 
 // Después de la conexión a la base de datos y la configuración del servidor...
 
-app.get("/get-dni-correo-data", (req, res) => {
-  connection.query("SELECT dni, correo FROM Usuario", (error, results) => {
+app.get("/get-data", (req, res) => {
+  connection.query("SELECT * FROM Usuario", (error, results) => {
     if (error) {
       console.error("Error al obtener datos de DNI y correo:", error);
       res.status(500).json({ message: "Error al obtener datos de DNI y correo" });

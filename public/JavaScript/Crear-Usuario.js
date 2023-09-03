@@ -75,7 +75,7 @@ formUsuario.addEventListener("submit",(event) => {
     // Luego, verificar si todos los campos son válidos
     // Después de realizar las validaciones y antes de enviar los datos del formulario...
 
-    fetch("/get-dni-correo-data")
+    fetch("/get-data")
     .then(response => response.json())
     .then(data => {
     const dniCorreoData = data; // Datos recibidos del servidor

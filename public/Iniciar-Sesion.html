@@ -1,11 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesion</title>
+  <link rel="stylesheet" href="/CSS/Crear-Usuario.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
-    Hello World
+  <h1>Iniciar sesion</h1>
+  
+  
+  <div id="formulario">
+<form id="formUsuario" class="formulario" novalidate >
+
+  
+  <label for="dniUsuario">DNI:</label>
+  <input type="text" id="dniUsuario" placeholder="DNI del Usuario" >
+  <p class="error-message">DNI incorrecto.</p>
+  
+  <label for="correoUsuario">Correo Electrónico:</label>
+  <input type="text" id="correoUsuario" placeholder="Correo electrónico" >
+  <p class="error-message">Correo incorrecto.</p>
+  
+  <label for="contrasenaUsuario">Contraseña:</label>
+  <button type="button" class="verContrasenaUsuario">Mostrar</button>
+  <input type="password" id="contrasenaUsuario" placeholder="Contraseña">
+  <p class="error-message">Contraseña incorrecto.</p>
+  <p class="error-message"><a href="Recuperar-Contraseña.html">¿Olvido su contraseña?</a></p>
+  
+  <button type="submit">Iniciar sesion</button>
+</form>
+  
+  <script src="/JavaScript/Iniciar-Sesion.js"></script>
 </body>
 </html>
