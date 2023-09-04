@@ -3,7 +3,7 @@ const dniUsuario = document.getElementById("dniUsuario");
 const correoUsuario = document.getElementById("correoUsuario");
 const contrasenaUsuario = document.getElementById("contrasenaUsuario");
 const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
-
+const BotonSubmit = document.getElementById("BotonSubmit");
 
 formUsuario.addEventListener("submit",(event) => {
     event.preventDefault(); 
@@ -23,6 +23,17 @@ formUsuario.addEventListener("submit",(event) => {
     errorElement.style.display = "none";
     }
 
+    // Validación: Verificar si todos los campos están vacíos
+    const camposVacios = Array.from(formUsuario.querySelectorAll("input[type='text'], input[type='password'], input[type='email']")).some(input => input.value.trim() === "");
+
+    if (camposVacios) {
+        showError(BotonSubmit, "Por favor complete los campos vacios.");
+        return; // No continuar con la verificación si hay campos vacíos
+    }else{
+        hideError(BotonSubmit)
+    }
+    
+
     // Luego, verificar si todos los campos son válidos
     // Después de realizar las validaciones y antes de enviar los datos del formulario...
 
@@ -30,8 +41,6 @@ formUsuario.addEventListener("submit",(event) => {
     .then(response => response.json())
     .then(data => {
     const dniCorreoData = data; // Datos recibidos del servidor
-    // Realiza el hash SHA-256 de la contraseña
-    const hashedContrasena = CryptoJS.SHA256(contrasenaUsuario).toString(CryptoJS.enc.Hex);
 
 
     // Realiza las comparaciones para mostrar mensajes de error si es necesario
@@ -46,12 +55,12 @@ formUsuario.addEventListener("submit",(event) => {
         } else {
             hideError(correoUsuario);
         }
-        if (row.contrasena != hashedContrasena) {
+        if (row.contrasena != contrasenaUsuario.value) {
             showError(contrasenaUsuario, "Contraseña incorrecto.");
         } else {
             hideError(contrasenaUsuario);
         }
-        if (row.dni === dniUsuario.value && row.correo === correoUsuario.value && row.contrasena === hashedContrasena){
+        if (row.dni == dniUsuario.value && row.correo == correoUsuario.value){
             window.location.href = '/pagina.html';
         }
     });

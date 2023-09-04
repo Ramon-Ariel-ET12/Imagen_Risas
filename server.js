@@ -52,6 +52,7 @@ app.post('/registrar-usuario', (req, res) => {
     if (insertError) {
       console.log('Error al registrar al Usuario', insertError);
       res.status(500).json({ message: 'Error al registrar Usuario' });
+      res.redirect("/Crear-Usuario.html");
     } else {
       console.log('Usuario registrado correctamente');
       res.status(200).json({ message: 'Usuario registrado correctamente' });

@@ -7,6 +7,7 @@ const fechaNacimientoUsuario = document.getElementById("fechaNacimientoUsuario")
 const contrasenaUsuario = document.getElementById("contrasenaUsuario");
 const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
 const sexoUsuario = document.getElementById("sexoUsuario");
+const BotonSubmit = document.getElementById("BotonSubmit");
 
 formUsuario.addEventListener("submit",(event) => {
     event.preventDefault(); 
@@ -24,6 +25,16 @@ formUsuario.addEventListener("submit",(event) => {
     function hideError(element) {
     const errorElement = element.nextElementSibling;
     errorElement.style.display = "none";
+    }
+
+    // Validación: Verificar si todos los campos están vacíos
+    const camposVacios = Array.from(formUsuario.querySelectorAll("input[type='text'], input[type='password'], input[type='email'], input[type='date']")).some(input => input.value.trim() === "");
+
+    if (camposVacios) {
+        showError(BotonSubmit, "Por favor complete los campos vacios.");
+        return; // No continuar con la verificación si hay campos vacíos
+    }else{
+        hideError(BotonSubmit)
     }
 
     // Validación del nombre (requerido)
