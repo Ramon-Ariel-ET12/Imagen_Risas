@@ -5,6 +5,22 @@ const contrasenaUsuario = document.getElementById("contrasenaUsuario");
 const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
 const BotonSubmit = document.getElementById("BotonSubmit");
 
+// Función para encriptar una cadena con SHA-256
+async function sha256(str) {
+    // Codificar la cadena en utf-8
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+  
+    // Calcular el hash SHA-256
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  
+    // Convertir el resultado en una cadena hexadecimal
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+  
+    return hashHex;
+  }
+
 formUsuario.addEventListener("submit",(event) => {
     event.preventDefault(); 
     let isValid = true;
@@ -55,15 +71,18 @@ formUsuario.addEventListener("submit",(event) => {
         } else {
             hideError(correoUsuario);
         }
-        if (row.contrasena != contrasenaUsuario.value) {
-            showError(contrasenaUsuario, "Contraseña incorrecto.");
-        } else {
-            hideError(contrasenaUsuario);
-        }
-        if (row.dni == dniUsuario.value && row.correo == correoUsuario.value){
-            window.location.href = '/pagina.html';
-        }
-    });
+        sha256(contrasenaUsuario.value).then(hash => {
+            if (row.contrasena != hash) {
+                showError(contrasenaUsuario, "Contraseña incorrecto.");
+            } else {
+                hideError(contrasenaUsuario);
+            }
+            if (row.dni == dniUsuario.value && row.correo == correoUsuario.value && row.contrasena == hash){
+                console.log(hash);
+                //window.location.href = '/pagina.html';
+            }
+        });
+    });        
 
     });
 });
@@ -78,3 +97,4 @@ verContrasenaUsuario.addEventListener("click", () => {
         verContrasenaUsuario.textContent = "Ocultar";
     }
 });
+
