@@ -9,6 +9,20 @@ const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
 const sexoUsuario = document.getElementById("sexoUsuario");
 const BotonSubmit = document.getElementById("BotonSubmit");
 
+// Calcular la fecha máxima como la fecha actual menos 15 años
+const fechaMaxima = new Date();
+fechaMaxima.setFullYear(fechaMaxima.getFullYear() - 15);
+const fechaMaximaFormato = fechaMaxima.toISOString().split('T')[0];
+
+// Calcular la fecha mínima como la fecha actual menos 100 años
+const fechaMinima = new Date();
+fechaMinima.setFullYear(fechaMinima.getFullYear() - 100);
+const fechaMinimaFormato = fechaMinima.toISOString().split('T')[0];
+
+// Establecer la fecha máxima y mínima calculadas en el campo de fecha
+document.getElementById("fechaNacimientoUsuario").setAttribute("max", fechaMaximaFormato);
+document.getElementById("fechaNacimientoUsuario").setAttribute("min", fechaMinimaFormato);
+
 formUsuario.addEventListener("submit",(event) => {
     event.preventDefault(); 
     let isValid = true;
@@ -37,24 +51,31 @@ formUsuario.addEventListener("submit",(event) => {
         hideError(BotonSubmit)
     }
 
-    // Validación del nombre (requerido)
+    // Validación del nombre (requerido y sin números)
     if (nombreUsuario.value.trim() === "") {
-    showError(nombreUsuario, "Por favor ingresa un nombre válido.");
+        showError(nombreUsuario, "Por favor ingresa un nombre válido.");
+    } else if (/[\d]/.test(nombreUsuario.value)) {
+        showError(nombreUsuario, "El nombre no debe contener números.");
     } else {
-    hideError(nombreUsuario);
+        hideError(nombreUsuario);
     }
 
-    // Validación del apellido (requerido)
+    // Validación del apellido (requerido y sin números)
     if (apellidoUsuario.value.trim() === "") {
-    showError(apellidoUsuario, "Por favor ingresa un apellido válido.");
+        showError(apellidoUsuario, "Por favor ingresa un apellido válido.");
+    } else if (/[\d]/.test(apellidoUsuario.value)) {
+        showError(apellidoUsuario, "El apellido no debe contener números.");
     } else {
-    hideError(apellidoUsuario);
+        hideError(apellidoUsuario);
     }
+
 
     // Validación del DNI (requerido, número)
     if (dniUsuario.value.trim() === "" || isNaN(dniUsuario.value)) {
     showError(dniUsuario, "Por favor ingresa un DNI válido.");
-    } else {
+    } else if (dniUsuario.value.length != 8) {
+        showError(dniUsuario, "El DNI debe tener 8 caracteres.");
+    }else {
     hideError(dniUsuario);
     }
 
@@ -78,6 +99,10 @@ formUsuario.addEventListener("submit",(event) => {
     // Validación de la fecha de nacimiento (requerida)
     if (fechaNacimientoUsuario.value === "") {
     showError(fechaNacimientoUsuario, "Por favor selecciona una fecha de nacimiento válida.");
+    } else if (fechaNacimientoUsuario.value > fechaMaximaFormato) {
+        showError(fechaNacimientoUsuario, "Por favor selecciona una fecha de nacimiento válida.");
+    } else if (fechaNacimientoUsuario.value < fechaMinimaFormato) {
+        showError(fechaNacimientoUsuario, "Por favor selecciona una fecha de nacimiento válida.");
     } else {
     hideError(fechaNacimientoUsuario);
     }

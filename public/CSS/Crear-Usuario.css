@@ -51,6 +51,18 @@ body {
   padding: 0 5px; /* Espaciado lateral */
 }
 
+/* Estilo para el campo de fecha */
+.datepicker {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+}
+
 /* Estilos para los campos de entrada y etiquetas */
 input[type="text"], input[type="password"], input[type="email"], input[type="date"], select {
   display: block;
@@ -61,6 +73,29 @@ input[type="text"], input[type="password"], input[type="email"], input[type="dat
   border-radius: 5px;
   background-color: #444; /* Color de fondo */
   color: white;
+}
+/* Estilo para el icono de calendario (solo en algunos navegadores) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* Estilo para el contenedor */
+.date-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Añadir margen inferior */
+}
+
+/* Estilo para el botón */
+#fechaNacimientoButton {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  margin: 0;
 }
 
 /* Estilos para el contenedor del campo de contraseña */
