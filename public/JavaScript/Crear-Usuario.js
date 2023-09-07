@@ -160,11 +160,12 @@ formUsuario.addEventListener("submit",(event) => {
 
 // Mostrar u ocultar la contraseña
 verContrasenaUsuario.addEventListener("click", () => {
-    if (contrasenaUsuario.type === "password") {
+    if (contrasenaUsuario.type == "password") {
         contrasenaUsuario.type = "text"; // Mostrar contraseña
-        verContrasenaUsuario.textContent = "Mostrar";
+        verContrasenaUsuario.textContent = "Ocultar";
     } else {
         contrasenaUsuario.type = "password"; // Ocultar contraseña
-        verContrasenaUsuario.textContent = "Ocultar";
+        verContrasenaUsuario.textContent = "Mostrar";
     }
 });
+
