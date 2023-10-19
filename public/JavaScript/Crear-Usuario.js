@@ -108,10 +108,17 @@ formUsuario.addEventListener("submit",(event) => {
     // Luego, verificar si todos los campos son válidos
     // Después de realizar las validaciones y antes de enviar los datos del formulario...
 
-    fetch("/get-data")
-    .then(response => response.json())
-    .then(data => {
-    const ApodoCorreoData = data; // Datos recibidos del servidor
+    fetch("/get-data", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ correo: correoUsuario.value, apodo: apodoUsuario.value }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Accede a los datos que recibiste como JSON
+        const ApodoCorreoData = data.data;
 
     // Realiza las comparaciones para mostrar mensajes de error si es necesario
     ApodoCorreoData.forEach(row => {
