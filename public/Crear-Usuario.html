@@ -20,19 +20,16 @@
   <input type="text" id="apellidoUsuario" placeholder="Apellido del Usuario" >
   <p class="error-message">Por favor ingresa un apellido válido.</p>
   
-  <label for="dniUsuario">DNI:</label>
-  <input type="text" id="dniUsuario" placeholder="DNI del Usuario" >
-  <p class="error-message">Por favor ingresa un DNI válido.</p>
-  
+  <label for="apodoUsuario">apodo:</label>
+  <input type="text" id="apodoUsuario" placeholder="Apodo del Usuario" >
+  <p class="error-message">Por favor ingresa un apodo válido.</p>
+
   <label for="correoUsuario">Correo Electrónico:</label>
-  <input type="text" id="correoUsuario" placeholder="Correo electrónico" >
+  <input type="text" id="correoUsuario" placeholder="Correo electrónico" autocomplete="email">
   <p class="error-message">Por favor ingresa un correo electrónico válido.</p>
   
-  <label for="contrasenaUsuario">Contraseña:</label>
-  <div class="password-input">
-    <input type="password" id="contrasenaUsuario" placeholder="Contraseña">
-    <button type="button" class="verContrasenaUsuario">Mostrar</button>
-  </div>
+  <label for="contrasenaUsuario">Contraseña<input type="Checkbox" class="verContrasenaUsuario"></input>:</label>
+  <input type="password" id="contrasenaUsuario" placeholder="Contraseña" autocomplete="current-password">
   <p class="error-message">Por favor ingresa una contraseña válida.</p>
   
   <label for="fechaNacimientoUsuario">Fecha de Nacimiento:</label>

@@ -1,7 +1,7 @@
 const formUsuario = document.getElementById("formUsuario");
 const nombreUsuario = document.getElementById("nombreUsuario");
 const apellidoUsuario = document.getElementById("apellidoUsuario");
-const dniUsuario = document.getElementById("dniUsuario");
+const apodoUsuario = document.getElementById("apodoUsuario");
 const correoUsuario = document.getElementById("correoUsuario");
 const fechaNacimientoUsuario = document.getElementById("fechaNacimientoUsuario");
 const contrasenaUsuario = document.getElementById("contrasenaUsuario");
@@ -69,14 +69,11 @@ formUsuario.addEventListener("submit",(event) => {
         hideError(apellidoUsuario);
     }
 
-
-    // Validación del DNI (requerido, número)
-    if (dniUsuario.value.trim() === "" || isNaN(dniUsuario.value)) {
-    showError(dniUsuario, "Por favor ingresa un DNI válido.");
-    } else if (dniUsuario.value.length != 8) {
-        showError(dniUsuario, "El DNI debe tener 8 caracteres.");
-    }else {
-    hideError(dniUsuario);
+    // Validación del apellido (requerido y sin números)
+    if (apodoUsuario.value.trim() === "") {
+        showError(apodoUsuario, "Por favor ingresa un apellido válido.");
+    } else {
+        hideError(apodoUsuario);
     }
 
     // Validación del correo electrónico (requerido, formato)
@@ -114,12 +111,12 @@ formUsuario.addEventListener("submit",(event) => {
     fetch("/get-data")
     .then(response => response.json())
     .then(data => {
-    const dniCorreoData = data; // Datos recibidos del servidor
+    const ApodoCorreoData = data; // Datos recibidos del servidor
 
     // Realiza las comparaciones para mostrar mensajes de error si es necesario
-    dniCorreoData.forEach(row => {
-        if (row.dni === dniUsuario.value) {
-        showError(dniUsuario, "El DNI ya está registrado.");
+    ApodoCorreoData.forEach(row => {
+        if (row.apodo === apodoUsuario.value) {
+        showError(apodoUsuario, "El apodo ya está registrado.");
         }
         if (row.correo === correoUsuario.value) {
         showError(correoUsuario, "El correo electrónico ya está registrado.");
@@ -130,7 +127,7 @@ formUsuario.addEventListener("submit",(event) => {
         const UsuarioData = {
             nombre: nombreUsuario.value,
             apellido: apellidoUsuario.value,
-            dni: dniUsuario.value,
+            apodo: apodoUsuario.value,
             correo: correoUsuario.value,
             contrasena: contrasenaUsuario.value,
             fechaNacimiento: fechaNacimientoUsuario.value,
@@ -162,10 +159,7 @@ formUsuario.addEventListener("submit",(event) => {
 verContrasenaUsuario.addEventListener("click", () => {
     if (contrasenaUsuario.type == "password") {
         contrasenaUsuario.type = "text"; // Mostrar contraseña
-        verContrasenaUsuario.textContent = "Ocultar";
     } else {
         contrasenaUsuario.type = "password"; // Ocultar contraseña
-        verContrasenaUsuario.textContent = "Mostrar";
     }
 });
-

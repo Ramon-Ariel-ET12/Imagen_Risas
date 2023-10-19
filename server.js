@@ -1,13 +1,12 @@
 const express = require("express");
 const path = require("path");
 const mysql = require("mysql");
-const crypto = require('crypto');
 
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "root",
-  database: "Task_Flow_Manager"
+  database: "Formulario"
 });
 
 connection.connect((error) => {
@@ -31,15 +30,25 @@ app.get("/", (req, res) => {
 
 // Después de la conexión a la base de datos y la configuración del servidor...
 
-app.get("/get-data", (req, res) => {
-  connection.query("SELECT * FROM Usuario", (error, results) => {
-    if (error) {
-      console.error("Error al obtener datos de DNI y correo:", error);
-      res.status(500).json({ message: "Error al obtener datos de DNI y correo" });
-    } else {
-      res.json(results);
+app.post('/auth', async (req, res) => {
+  const { correo, contrasena } = req.body;
+  connection.query(
+    'SELECT * FROM usuario WHERE correo = ? AND contraseña = ?',
+    [correo, contrasena],
+    (error, results) => {
+      if (error) {
+        console.error('Error al consultar la base de datos: ', error);
+        return res.status(500).json({ error: 'Error de la base de datos' });
+      }
+
+      if (results.length === 0) {
+        return res.status(401).json({ error: 'Credenciales incorrectas' });
+      }
+
+      // Envía los datos del usuario encontrado
+      res.json({ user: results[0] });
     }
-  });
+  );
 });
 
 app.post('/registrar-usuario', (req, res) => {
@@ -47,7 +56,7 @@ app.post('/registrar-usuario', (req, res) => {
   // No hay duplicados, proceder con la inserción
   connection.query(    
   "CALL AltaUsuario ( ?, ?, ?, ?, ?, ?, ?)",
-  [ UsuarioData.nombre, UsuarioData.apellido, UsuarioData.dni, UsuarioData.correo, UsuarioData.contrasena, UsuarioData.fechaNacimiento, UsuarioData.sexo],
+  [ UsuarioData.nombre, UsuarioData.apellido, UsuarioData.apodo, UsuarioData.correo, UsuarioData.contrasena, UsuarioData.fechaNacimiento, UsuarioData.sexo],
   (insertError, insertResults) => {
     if (insertError) {
       console.log('Error al registrar al Usuario', insertError);

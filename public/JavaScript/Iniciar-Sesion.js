@@ -1,5 +1,4 @@
 const formUsuario = document.getElementById("formUsuario");
-const dniUsuario = document.getElementById("dniUsuario");
 const correoUsuario = document.getElementById("correoUsuario");
 const contrasenaUsuario = document.getElementById("contrasenaUsuario");
 const verContrasenaUsuario = document.querySelector(".verContrasenaUsuario");
@@ -53,48 +52,51 @@ formUsuario.addEventListener("submit",(event) => {
     // Luego, verificar si todos los campos son válidos
     // Después de realizar las validaciones y antes de enviar los datos del formulario...
 
-    fetch("/get-data")
-    .then(response => response.json())
-    .then(data => {
-    const dniCorreoData = data; // Datos recibidos del servidor
 
 
-    // Realiza las comparaciones para mostrar mensajes de error si es necesario
-    dniCorreoData.forEach(row => {
-        if (row.dni != dniUsuario.value) {
-            showError(dniUsuario, "DNI incorrecto.");
-        } else {
-            hideError(dniUsuario);
-        }
-        if (row.correo != correoUsuario.value) {
-            showError(correoUsuario, "Correo incorrecto.");
-        } else {
-            hideError(correoUsuario);
-        }
-        sha256(contrasenaUsuario.value).then(hash => {
-            if (row.contrasena != hash) {
-                showError(contrasenaUsuario, "Contraseña incorrecto.");
+    // No redeclarar las variables, simplemente accede a las definidas arriba
+    const correoUsuarioValue = correoUsuario.value;
+    const contrasenaUsuarioValue = contrasenaUsuario.value;
+
+    // Encripta la contraseña
+    sha256(contrasenaUsuarioValue).then(async (hash) => {
+        const response = await fetch('/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ correo: correoUsuarioValue, contrasena: hash }),
+        });
+
+        if (response.status === 200) {
+            // userData.user contendrá todos los datos de la fila del usuario
+            const userData = await response.json();
+
+            if (userData.user.contrasena == hash) {
+                showError(contrasenaUsuario, "Contraseña incorrecta.");
             } else {
                 hideError(contrasenaUsuario);
             }
-            if (row.dni == dniUsuario.value && row.correo == correoUsuario.value && row.contrasena == hash){
-                console.log(hash);
-                //window.location.href = '/pagina.html';
-            }
-        });
-    });        
 
+            if (userData.user.correo === correoUsuarioValue) {
+                // Usuario autenticado con éxito, puedes redirigirlo a la página deseada
+                window.location.href = '/pagina.html';
+            } else {
+                showError(correoUsuario, "Correo incorrecto.");
+            }
+        } else if (response.status === 401) {
+            showError(BotonSubmit, "Credenciales incorrectas.");
+        } else {
+            showError(BotonSubmit, "Error en la autenticación.");
+        }
     });
-});
+  });
 
 // Mostrar u ocultar la contraseña
 verContrasenaUsuario.addEventListener("click", () => {
-    if (contrasenaUsuario.type === "password") {
+    if (contrasenaUsuario.type == "password") {
         contrasenaUsuario.type = "text"; // Mostrar contraseña
-        verContrasenaUsuario.textContent = "Mostrar";
     } else {
         contrasenaUsuario.type = "password"; // Ocultar contraseña
-        verContrasenaUsuario.textContent = "Ocultar";
     }
 });
-

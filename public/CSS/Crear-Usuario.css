@@ -66,27 +66,15 @@ body {
 /* Estilos para los campos de entrada y etiquetas */
 input[type="text"], input[type="password"], input[type="email"], input[type="date"], select {
   display: block;
-  width: 100%;
+  width: 95%;
   margin-bottom: 10px;
   border-radius: 500px;
   flex: 1; /* Hacer que el campo de contraseña ocupe el espacio restante */
   padding: 10px;
-  margin: 0;
+  margin: 1;
   border: none;
   color: white;
   background-color: #444; /* Cambiar el fondo a negro */
-}
-/* Estilo para el icono de calendario (solo en algunos navegadores) */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
-/* Estilo para el contenedor */
-.date-input-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px; /* Añadir margen inferior */
 }
 
 /* Estilo para el botón */
@@ -98,36 +86,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   padding: 0;
   font-size: 14px;
   margin: 0;
-}
-
-/* Estilos para el contenedor del campo de contraseña */
-.password-input {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px; /* Añadir margen inferior */
-  background-color: #444; /* Color de fondo */
-  border: 1px solid #ccc; /* Borde para el contenedor */
-  border-radius: 500px; /* Borde redondeado */
-  padding: 0 5px; /* Espaciado lateral */
-}
-
-/* Estilos para el botón de mostrar contraseña dentro del contenedor */
-.password-input button.verContrasenaUsuario {
-  background-color: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-size: 14px;
-}
-
-/* Estilos para el contenedor del campo de contraseña */
-.password-input {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px; /* Añadir margen inferior */
 }
 
 /* Estilos para el botón de mostrar contraseña */
