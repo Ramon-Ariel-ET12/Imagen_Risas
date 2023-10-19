@@ -30,6 +30,23 @@ app.get("/", (req, res) => {
 
 // Después de la conexión a la base de datos y la configuración del servidor...
 
+app.post('/get-data', (req, res) => {
+  const { correo, apodo } = req.body;
+  connection.query(
+    'SELECT * FROM Usuario WHERE correo = ? AND apodo = ?',
+    [correo, apodo],
+    (error, results) => {
+      if (error) {
+        console.error('Error al consultar la base de datos: ', error);
+        return res.status(500).json({ error: 'Error de la base de datos' });
+      } else {
+        // Envía los datos como un objeto JSON
+        res.json({ data: results });
+      }
+    }
+  );
+});
+
 app.post('/auth', async (req, res) => {
   const { correo, contrasena } = req.body;
   connection.query(
