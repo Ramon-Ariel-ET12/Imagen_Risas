@@ -80,7 +80,7 @@ formUsuario.addEventListener("submit",(event) => {
 
             if (userData.user.correo === correoUsuarioValue) {
                 // Usuario autenticado con éxito, puedes redirigirlo a la página deseada
-                window.location.href = '/pagina.html';
+                window.location.href = '/principal.html';
             } else {
                 showError(correoUsuario, "Correo incorrecto.");
             }
